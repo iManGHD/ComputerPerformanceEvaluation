@@ -52,10 +52,8 @@ class Event:
         else:
             return self.occ_time - other
 
-
 def generate_exp_rv(rate):
     return -1.0 * np.log(1.0 - random.random()) / rate
-
 
 def binary_search(arr, x):
     low = 0
@@ -80,7 +78,6 @@ def binary_search(arr, x):
     # If we reach here, then the element was not present
     return low
 
-
 def insert_arr(arr, value):
     # idx = np.argmin(np.abs(value - np.array(arr)))
     idx = binary_search(arr, value)
@@ -96,7 +93,6 @@ def insert_arr(arr, value):
             arr.insert(idx, value)
     return arr
 
-
 def make_customer(pre_cus_time, id):
     if const_theta:
         waiting_time = theta
@@ -107,7 +103,6 @@ def make_customer(pre_cus_time, id):
     arrival_time = pre_cus_time + generate_exp_rv(lamb)
     customer = Customer(id, arrival_time, waiting_time, service_time)
     return customer
-
 
 def phi_n(n, is_const_theta, mu, theta):
     if not is_const_theta:
@@ -121,7 +116,6 @@ def phi_n(n, is_const_theta, mu, theta):
         else:
             return mu / (math.exp(mu * theta / n) - 1)
 
-
 def p_n(n, p0, lamba, is_const_theta, mu, theta):
     if n == 0:
         return p0
@@ -130,7 +124,6 @@ def p_n(n, p0, lamba, is_const_theta, mu, theta):
         for i in range(1, n + 1):
             dom *= (mu + phi_n(i, is_const_theta, mu, theta))
         return p0 * lamba ** n / dom
-
 
 def caculate_p0(lamba, constant_theta, mu, theta):
     sum = 0
@@ -142,7 +135,6 @@ def caculate_p0(lamba, constant_theta, mu, theta):
     p0 = 1.0 / (1 + sum)
     return p0
 
-
 def find_first_job(queue):
     if len(queue) == 0:
         return None
@@ -151,7 +143,6 @@ def find_first_job(queue):
         if p.service_time < min.service_time:
             min = p
     return min
-
 
 if __name__ == "__main__":
 
@@ -210,7 +201,6 @@ if __name__ == "__main__":
                 pre_task_service = (mu / len(queue))
             first_job = find_first_job(queue)
 
-
             if first_job and (((first_job.service_time / pre_task_service) + time) < nxt_cus.arrival_time or cnt >= num_of_customers):
                 if events[0].occ_time >= ((first_job.service_time / pre_task_service) + time):
 
@@ -219,7 +209,6 @@ if __name__ == "__main__":
                     # remove customer from server
 
                     queue.remove(first_job)
-
 
                     # remove deadline event
                     for event in events:
@@ -255,10 +244,8 @@ if __name__ == "__main__":
                         nxt_cus = make_customer(pre_cus.arrival_time, cnt)
                 #################################################
 
-
             # get first event of list of events (sorted)
             event = events.pop(0)
-
 
             # update time
             pre_time = time
@@ -286,13 +273,8 @@ if __name__ == "__main__":
 
                     queue.append(customer)
 
-
-
-
                     # adding deadline by the way
                     insert_arr(events, Event(customer.id, 1, time + customer.waiting_time))
-
-
 
             # dead line event
             if event.type_idx == 1:
@@ -300,14 +282,10 @@ if __name__ == "__main__":
                 customer = next((x for x in queue if x.id == event.customer_id), None)
 
                 if customer:
-
-
+                    
                     queue.remove(customer)
 
-
-
                 num_deadlined_users += 1
-
 
         pb_experiment = num_blocked_users / num_of_customers
         pd_experiment = num_deadlined_users / num_of_customers

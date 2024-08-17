@@ -1,8 +1,16 @@
+
+'''
+    Author : Iman Ghadimi
+    S.Num : 99210742
+    Date : 12/23/2022
+'''
+
+# Calling Libraries :
+
 import numpy as np
 from queue import Queue
 import random
 import math
-
 
 class Customer:
 
@@ -18,7 +26,6 @@ class Customer:
 
     def __lt__(self, other):
         return self.arrival_time < other.arrival_time
-
 
 class Event:
 
@@ -44,10 +51,8 @@ class Event:
         else:
             return self.occ_time - other
 
-
 def generate_exp_rv(rate):
     return -1.0 * np.log(1.0 - random.random()) / rate
-
 
 def binary_search(arr, x):
     low = 0
@@ -72,7 +77,6 @@ def binary_search(arr, x):
     # If we reach here, then the element was not present
     return low
 
-
 def insert_arr(arr, value):
     # idx = np.argmin(np.abs(value - np.array(arr)))
     idx = binary_search(arr, value)
@@ -88,7 +92,6 @@ def insert_arr(arr, value):
             arr.insert(idx, value)
     return arr
 
-
 def make_customer(pre_cus_time, id):
     if const_theta:
         waiting_time = theta
@@ -99,7 +102,6 @@ def make_customer(pre_cus_time, id):
     arrival_time = pre_cus_time + generate_exp_rv(lamb)
     customer = Customer(id, arrival_time, waiting_time, service_time)
     return customer
-
 
 def phi_n(n, is_const_theta, mu, theta):
     if not is_const_theta:
@@ -113,7 +115,6 @@ def phi_n(n, is_const_theta, mu, theta):
         else:
             return mu / (math.exp(mu * theta / n) - 1)
 
-
 def p_n(n, p0, lamba, is_const_theta, mu, theta):
     if n == 0:
         return p0
@@ -122,7 +123,6 @@ def p_n(n, p0, lamba, is_const_theta, mu, theta):
         for i in range(1, n + 1):
             dom *= (mu + phi_n(i, is_const_theta, mu, theta))
         return p0 * lamba ** n / dom
-
 
 def caculate_p0(lamba, constant_theta, mu, theta):
     sum = 0
@@ -134,7 +134,6 @@ def caculate_p0(lamba, constant_theta, mu, theta):
     p0 = 1.0 / (1 + sum)
     return p0
 
-
 def find_first_job(queue):
     if len(queue) == 0:
         return None
@@ -144,7 +143,6 @@ def find_first_job(queue):
             min = p
     return min
 
-
 if __name__ == "__main__":
 
     f = open("parameters.conf", "r")
@@ -153,7 +151,6 @@ if __name__ == "__main__":
 
     theta = 2.0
     mu = 1.0
-
 
     const_theta = True
     num_of_customers = 1_000_000_0
@@ -195,9 +192,7 @@ if __name__ == "__main__":
                 pre_task_service = (mu / len(queue))
             first_job = find_first_job(queue)
 
-            if first_job and ((
-                                      (
-                                              first_job.service_time / pre_task_service) + time) < nxt_cus.arrival_time or cnt >= num_of_customers):
+            if first_job and (((first_job.service_time / pre_task_service) + time) < nxt_cus.arrival_time or cnt >= num_of_customers):
                 if events[0].occ_time >= ((first_job.service_time / pre_task_service) + time):
 
                     ############ CALCULATE SERVICE ###########
@@ -235,7 +230,6 @@ if __name__ == "__main__":
                         pre_cus = nxt_cus
                         nxt_cus = make_customer(pre_cus.arrival_time, cnt)
                 #################################################
-
 
             # get first event of list of events (sorted)
             event = events.pop(0)

@@ -1,8 +1,16 @@
+
+'''
+    Author : Iman Ghadimi
+    S.Num : 99210742
+    Date : 11/27/2022
+'''
+
+# Calling Libraries :
+
 import numpy as np
 from queue import Queue
 import random
 import math
-
 
 class Customer:
 

@@ -2,10 +2,6 @@
 
 This repository serves as a comprehensive collection of all the projects, homework assignments, and resources related to the Performance Evaluation course I completed in my fifth semester of my Master's degree at Sharif University of Technology. The course was instructed by Prof. Ali Movaghar from the Department of Computer Engineering. 
 
-# Homework Repository
-
-Welcome to the Homework (Computer-Performance-Evaluation-Student-Role) Repository. This repository contains three homework assignments along with their respective solutions. Below is an overview of each assignment.
-
 ## Homework 1: M/M/1/K Queue Analysis
 
 **Description:**  
